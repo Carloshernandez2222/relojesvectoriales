@@ -1,0 +1,11 @@
+{
+  "name": "relojes-vectoriales",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "python -m pip install -r requirements.txt",
+  "forwardPorts": [5001, 5002, 5003],
+  "portsAttributes": {
+    "5001": { "label": "Nodo A", "onAutoForward": "notify" },
+    "5002": { "label": "Nodo B", "onAutoForward": "notify" },
+    "5003": { "label": "Nodo C", "onAutoForward": "notify" }
+  }
+}

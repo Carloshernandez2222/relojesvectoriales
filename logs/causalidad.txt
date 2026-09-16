@@ -1,0 +1,86 @@
+=== Relaciones de causalidad y concurrencia ===
+
+Cada evento de interés queda etiquetado con el reloj DESPUÉS de ocurrir.
+e -> f si el reloj de e es menor o igual componente a componente y estrictamente
+menor en al menos una posición. Si no hay e → f ni f → e, son concurrentes.
+
+E1  nodo=A  tipo=EVENTO_LOCAL  VC=[A:1, B:0, C:0]  A inicia cálculo local
+E2  nodo=B  tipo=EVENTO_LOCAL  VC=[A:0, B:1, C:0]  B inicia cálculo local
+E3  nodo=A  tipo=ENVIO  VC=[A:2, B:0, C:0]  A envía a B: resultado parcial de A
+E4  nodo=B  tipo=RECEPCION  VC=[A:2, B:2, C:0]  B recibe de A: resultado parcial de A
+E5  nodo=C  tipo=EVENTO_LOCAL  VC=[A:0, B:0, C:1]  C trabaja en paralelo
+E6  nodo=B  tipo=ENVIO  VC=[A:2, B:3, C:0]  B envía a C: B reenvía lo de A más lo propio
+E7  nodo=C  tipo=RECEPCION  VC=[A:2, B:3, C:2]  C recibe de B: B reenvía lo de A más lo propio
+E8  nodo=C  tipo=ENVIO  VC=[A:2, B:3, C:3]  C envía a A: C responde a A
+E9  nodo=A  tipo=RECEPCION  VC=[A:3, B:3, C:3]  A recibe de C: C responde a A
+E10  nodo=B  tipo=EVENTO_LOCAL  VC=[A:2, B:4, C:0]  B hace otro trabajo local
+E11  nodo=A  tipo=ENVIO  VC=[A:4, B:3, C:3]  A envía a C: A avisa a C
+E12  nodo=C  tipo=RECEPCION  VC=[A:4, B:3, C:4]  C recibe de A: A avisa a C
+
+--- Comparaciones ---
+E1 || E2  (concurrentes)
+E1 -> E3  (causal: E1 sucede-antes que E3)
+E1 -> E4  (causal: E1 sucede-antes que E4)
+E1 || E5  (concurrentes)
+E1 -> E6  (causal: E1 sucede-antes que E6)
+E1 -> E7  (causal: E1 sucede-antes que E7)
+E1 -> E8  (causal: E1 sucede-antes que E8)
+E1 -> E9  (causal: E1 sucede-antes que E9)
+E1 -> E10  (causal: E1 sucede-antes que E10)
+E1 -> E11  (causal: E1 sucede-antes que E11)
+E1 -> E12  (causal: E1 sucede-antes que E12)
+E2 || E3  (concurrentes)
+E2 -> E4  (causal: E2 sucede-antes que E4)
+E2 || E5  (concurrentes)
+E2 -> E6  (causal: E2 sucede-antes que E6)
+E2 -> E7  (causal: E2 sucede-antes que E7)
+E2 -> E8  (causal: E2 sucede-antes que E8)
+E2 -> E9  (causal: E2 sucede-antes que E9)
+E2 -> E10  (causal: E2 sucede-antes que E10)
+E2 -> E11  (causal: E2 sucede-antes que E11)
+E2 -> E12  (causal: E2 sucede-antes que E12)
+E3 -> E4  (causal: E3 sucede-antes que E4)
+E3 || E5  (concurrentes)
+E3 -> E6  (causal: E3 sucede-antes que E6)
+E3 -> E7  (causal: E3 sucede-antes que E7)
+E3 -> E8  (causal: E3 sucede-antes que E8)
+E3 -> E9  (causal: E3 sucede-antes que E9)
+E3 -> E10  (causal: E3 sucede-antes que E10)
+E3 -> E11  (causal: E3 sucede-antes que E11)
+E3 -> E12  (causal: E3 sucede-antes que E12)
+E4 || E5  (concurrentes)
+E4 -> E6  (causal: E4 sucede-antes que E6)
+E4 -> E7  (causal: E4 sucede-antes que E7)
+E4 -> E8  (causal: E4 sucede-antes que E8)
+E4 -> E9  (causal: E4 sucede-antes que E9)
+E4 -> E10  (causal: E4 sucede-antes que E10)
+E4 -> E11  (causal: E4 sucede-antes que E11)
+E4 -> E12  (causal: E4 sucede-antes que E12)
+E5 || E6  (concurrentes)
+E5 -> E7  (causal: E5 sucede-antes que E7)
+E5 -> E8  (causal: E5 sucede-antes que E8)
+E5 -> E9  (causal: E5 sucede-antes que E9)
+E5 || E10  (concurrentes)
+E5 -> E11  (causal: E5 sucede-antes que E11)
+E5 -> E12  (causal: E5 sucede-antes que E12)
+E6 -> E7  (causal: E6 sucede-antes que E7)
+E6 -> E8  (causal: E6 sucede-antes que E8)
+E6 -> E9  (causal: E6 sucede-antes que E9)
+E6 -> E10  (causal: E6 sucede-antes que E10)
+E6 -> E11  (causal: E6 sucede-antes que E11)
+E6 -> E12  (causal: E6 sucede-antes que E12)
+E7 -> E8  (causal: E7 sucede-antes que E8)
+E7 -> E9  (causal: E7 sucede-antes que E9)
+E7 || E10  (concurrentes)
+E7 -> E11  (causal: E7 sucede-antes que E11)
+E7 -> E12  (causal: E7 sucede-antes que E12)
+E8 -> E9  (causal: E8 sucede-antes que E9)
+E8 || E10  (concurrentes)
+E8 -> E11  (causal: E8 sucede-antes que E11)
+E8 -> E12  (causal: E8 sucede-antes que E12)
+E9 || E10  (concurrentes)
+E9 -> E11  (causal: E9 sucede-antes que E11)
+E9 -> E12  (causal: E9 sucede-antes que E12)
+E10 || E11  (concurrentes)
+E10 || E12  (concurrentes)
+E11 -> E12  (causal: E11 sucede-antes que E12)
