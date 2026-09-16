@@ -1,5 +1,6 @@
 {
   "A": {
+    "archivo": "nodo_a.py",
     "estadisticas": {
       "acks_enviados": 1,
       "acks_recibidos": 2,
@@ -11,7 +12,7 @@
     "historial": [
       {
         "detalle": "A inicia cálculo local",
-        "marca_tiempo": "2026-09-16T17:41:15.142898+00:00",
+        "marca_tiempo": "2026-09-16T17:46:40.226065+00:00",
         "nodo": "A",
         "reloj_antes": {
           "A": 0,
@@ -28,8 +29,8 @@
       {
         "destino": "B",
         "detalle": "A envía a B: resultado parcial de A",
-        "marca_tiempo": "2026-09-16T17:41:15.172381+00:00",
-        "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+        "marca_tiempo": "2026-09-16T17:46:40.255054+00:00",
+        "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
         "nodo": "A",
         "reloj_antes": {
           "A": 1,
@@ -47,7 +48,7 @@
         "ack": {
           "destino_ack": "A",
           "mensajes_recibidos": 1,
-          "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+          "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
           "origen_ack": "B",
           "recibido": true,
           "reloj_receptor": {
@@ -57,8 +58,8 @@
           }
         },
         "detalle": "Recepción confirmada por B (respuesta_http)",
-        "marca_tiempo": "2026-09-16T17:41:15.190888+00:00",
-        "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+        "marca_tiempo": "2026-09-16T17:46:40.272518+00:00",
+        "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
         "nodo": "A",
         "reloj_antes": {
           "A": 2,
@@ -74,8 +75,8 @@
       },
       {
         "detalle": "A recibe de C: C responde a A",
-        "marca_tiempo": "2026-09-16T17:41:15.674100+00:00",
-        "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+        "marca_tiempo": "2026-09-16T17:46:40.738085+00:00",
+        "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
         "nodo": "A",
         "origen": "C",
         "reloj_antes": {
@@ -91,9 +92,9 @@
         "tipo": "RECEPCION"
       },
       {
-        "detalle": "A confirma recepción 2173e657-692c-434f-b93d-b13f9cd02300 a C",
-        "marca_tiempo": "2026-09-16T17:41:15.674248+00:00",
-        "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+        "detalle": "A confirma recepción 5db67ac1-f83e-4e21-bf11-eb8191e8c302 a C",
+        "marca_tiempo": "2026-09-16T17:46:40.738209+00:00",
+        "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
         "nodo": "A",
         "origen": "C",
         "reloj_antes": {
@@ -111,8 +112,8 @@
       {
         "destino": "C",
         "detalle": "A envía a C: A avisa a C",
-        "marca_tiempo": "2026-09-16T17:41:15.888407+00:00",
-        "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+        "marca_tiempo": "2026-09-16T17:46:40.972782+00:00",
+        "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
         "nodo": "A",
         "reloj_antes": {
           "A": 3,
@@ -130,7 +131,7 @@
         "ack": {
           "destino_ack": "A",
           "mensajes_recibidos": 2,
-          "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+          "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
           "origen_ack": "C",
           "recibido": true,
           "reloj_receptor": {
@@ -140,8 +141,8 @@
           }
         },
         "detalle": "Recepción confirmada por C (respuesta_http)",
-        "marca_tiempo": "2026-09-16T17:41:15.892967+00:00",
-        "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+        "marca_tiempo": "2026-09-16T17:46:40.991519+00:00",
+        "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
         "nodo": "A",
         "reloj_antes": {
           "A": 4,
@@ -166,7 +167,7 @@
       {
         "confirmado": true,
         "destino": "B",
-        "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+        "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
         "payload": "resultado parcial de A",
         "reloj_envio": {
           "A": 2,
@@ -183,7 +184,7 @@
       {
         "confirmado": true,
         "destino": "C",
-        "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+        "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
         "payload": "A avisa a C",
         "reloj_envio": {
           "A": 4,
@@ -205,6 +206,7 @@
     }
   },
   "B": {
+    "archivo": "nodo_b.py",
     "estadisticas": {
       "acks_enviados": 1,
       "acks_recibidos": 1,
@@ -216,7 +218,7 @@
     "historial": [
       {
         "detalle": "B inicia cálculo local",
-        "marca_tiempo": "2026-09-16T17:41:15.144996+00:00",
+        "marca_tiempo": "2026-09-16T17:46:40.239619+00:00",
         "nodo": "B",
         "reloj_antes": {
           "A": 0,
@@ -232,8 +234,8 @@
       },
       {
         "detalle": "B recibe de A: resultado parcial de A",
-        "marca_tiempo": "2026-09-16T17:41:15.188214+00:00",
-        "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+        "marca_tiempo": "2026-09-16T17:46:40.270875+00:00",
+        "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
         "nodo": "B",
         "origen": "A",
         "reloj_antes": {
@@ -249,9 +251,9 @@
         "tipo": "RECEPCION"
       },
       {
-        "detalle": "B confirma recepción e845aad4-2c89-482a-87bd-e7c25843c950 a A",
-        "marca_tiempo": "2026-09-16T17:41:15.188476+00:00",
-        "message_id": "e845aad4-2c89-482a-87bd-e7c25843c950",
+        "detalle": "B confirma recepción b1987cca-1bb9-42e3-8c1d-504a160edfbd a A",
+        "marca_tiempo": "2026-09-16T17:46:40.270965+00:00",
+        "message_id": "b1987cca-1bb9-42e3-8c1d-504a160edfbd",
         "nodo": "B",
         "origen": "A",
         "reloj_antes": {
@@ -269,8 +271,8 @@
       {
         "destino": "C",
         "detalle": "B envía a C: B reenvía lo de A más lo propio",
-        "marca_tiempo": "2026-09-16T17:41:15.421530+00:00",
-        "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+        "marca_tiempo": "2026-09-16T17:46:40.491560+00:00",
+        "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
         "nodo": "B",
         "reloj_antes": {
           "A": 2,
@@ -288,7 +290,7 @@
         "ack": {
           "destino_ack": "B",
           "mensajes_recibidos": 1,
-          "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+          "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
           "origen_ack": "C",
           "recibido": true,
           "reloj_receptor": {
@@ -298,8 +300,8 @@
           }
         },
         "detalle": "Recepción confirmada por C (respuesta_http)",
-        "marca_tiempo": "2026-09-16T17:41:15.440658+00:00",
-        "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+        "marca_tiempo": "2026-09-16T17:46:40.504641+00:00",
+        "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
         "nodo": "B",
         "reloj_antes": {
           "A": 2,
@@ -315,7 +317,7 @@
       },
       {
         "detalle": "B hace otro trabajo local",
-        "marca_tiempo": "2026-09-16T17:41:15.883160+00:00",
+        "marca_tiempo": "2026-09-16T17:46:40.957272+00:00",
         "nodo": "B",
         "reloj_antes": {
           "A": 2,
@@ -340,7 +342,7 @@
       {
         "confirmado": true,
         "destino": "C",
-        "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+        "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
         "payload": "B reenvía lo de A más lo propio",
         "reloj_envio": {
           "A": 2,
@@ -362,6 +364,7 @@
     }
   },
   "C": {
+    "archivo": "nodo_c.py",
     "estadisticas": {
       "acks_enviados": 2,
       "acks_recibidos": 1,
@@ -373,7 +376,7 @@
     "historial": [
       {
         "detalle": "C trabaja en paralelo",
-        "marca_tiempo": "2026-09-16T17:41:15.398178+00:00",
+        "marca_tiempo": "2026-09-16T17:46:40.488344+00:00",
         "nodo": "C",
         "reloj_antes": {
           "A": 0,
@@ -389,8 +392,8 @@
       },
       {
         "detalle": "C recibe de B: B reenvía lo de A más lo propio",
-        "marca_tiempo": "2026-09-16T17:41:15.437199+00:00",
-        "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+        "marca_tiempo": "2026-09-16T17:46:40.503274+00:00",
+        "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
         "nodo": "C",
         "origen": "B",
         "reloj_antes": {
@@ -406,9 +409,9 @@
         "tipo": "RECEPCION"
       },
       {
-        "detalle": "C confirma recepción 8c901b10-3290-4b31-ace3-2cf6fb5b3fc7 a B",
-        "marca_tiempo": "2026-09-16T17:41:15.437459+00:00",
-        "message_id": "8c901b10-3290-4b31-ace3-2cf6fb5b3fc7",
+        "detalle": "C confirma recepción e0484e85-c3da-427e-9ace-9caad33942aa a B",
+        "marca_tiempo": "2026-09-16T17:46:40.503385+00:00",
+        "message_id": "e0484e85-c3da-427e-9ace-9caad33942aa",
         "nodo": "C",
         "origen": "B",
         "reloj_antes": {
@@ -426,8 +429,8 @@
       {
         "destino": "A",
         "detalle": "C envía a A: C responde a A",
-        "marca_tiempo": "2026-09-16T17:41:15.669215+00:00",
-        "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+        "marca_tiempo": "2026-09-16T17:46:40.721922+00:00",
+        "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
         "nodo": "C",
         "reloj_antes": {
           "A": 2,
@@ -445,7 +448,7 @@
         "ack": {
           "destino_ack": "C",
           "mensajes_recibidos": 1,
-          "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+          "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
           "origen_ack": "A",
           "recibido": true,
           "reloj_receptor": {
@@ -455,8 +458,8 @@
           }
         },
         "detalle": "Recepción confirmada por A (respuesta_http)",
-        "marca_tiempo": "2026-09-16T17:41:15.676104+00:00",
-        "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+        "marca_tiempo": "2026-09-16T17:46:40.739584+00:00",
+        "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
         "nodo": "C",
         "reloj_antes": {
           "A": 2,
@@ -472,8 +475,8 @@
       },
       {
         "detalle": "C recibe de A: A avisa a C",
-        "marca_tiempo": "2026-09-16T17:41:15.891136+00:00",
-        "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+        "marca_tiempo": "2026-09-16T17:46:40.988311+00:00",
+        "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
         "nodo": "C",
         "origen": "A",
         "reloj_antes": {
@@ -489,9 +492,9 @@
         "tipo": "RECEPCION"
       },
       {
-        "detalle": "C confirma recepción 6f22fcc1-9e53-4924-956d-a85a8cd7b578 a A",
-        "marca_tiempo": "2026-09-16T17:41:15.891407+00:00",
-        "message_id": "6f22fcc1-9e53-4924-956d-a85a8cd7b578",
+        "detalle": "C confirma recepción 2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68 a A",
+        "marca_tiempo": "2026-09-16T17:46:40.988582+00:00",
+        "message_id": "2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68",
         "nodo": "C",
         "origen": "A",
         "reloj_antes": {
@@ -517,7 +520,7 @@
       {
         "confirmado": true,
         "destino": "A",
-        "message_id": "2173e657-692c-434f-b93d-b13f9cd02300",
+        "message_id": "5db67ac1-f83e-4e21-bf11-eb8191e8c302",
         "payload": "C responde a A",
         "reloj_envio": {
           "A": 2,

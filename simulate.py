@@ -27,10 +27,6 @@ PEERS = {
 }
 
 
-def peers_arg() -> str:
-    return ",".join(f"{k}={v}" for k, v in PEERS.items())
-
-
 def wait_ready(timeout: float = 15.0) -> None:
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -58,22 +54,10 @@ def get_state(nodo: str) -> dict:
 
 
 def start_nodes() -> list[subprocess.Popen]:
+    archivos = ["nodo_a.py", "nodo_b.py", "nodo_c.py"]
     procesos = []
-    for nombre, url in PEERS.items():
-        puerto = int(url.rsplit(":", 1)[1])
-        proc = subprocess.Popen(
-            [
-                sys.executable,
-                str(ROOT / "nodo.py"),
-                "--id",
-                nombre,
-                "--port",
-                str(puerto),
-                "--peers",
-                peers_arg(),
-            ],
-            cwd=str(ROOT),
-        )
+    for archivo in archivos:
+        proc = subprocess.Popen([sys.executable, str(ROOT / archivo)], cwd=str(ROOT))
         procesos.append(proc)
     return procesos
 

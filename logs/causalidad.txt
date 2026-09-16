@@ -2,7 +2,7 @@
 
 Cada evento de interés queda etiquetado con el reloj DESPUÉS de ocurrir.
 e -> f si el reloj de e es menor o igual componente a componente y estrictamente
-menor en al menos una posición. Si no hay e → f ni f → e, son concurrentes.
+menor en al menos una posicion. Si no hay e -> f ni f -> e, son concurrentes.
 
 E1  nodo=A  tipo=EVENTO_LOCAL  VC=[A:1, B:0, C:0]  A inicia cálculo local
 E2  nodo=B  tipo=EVENTO_LOCAL  VC=[A:0, B:1, C:0]  B inicia cálculo local

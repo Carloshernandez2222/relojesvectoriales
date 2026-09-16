@@ -15,12 +15,14 @@ python test_vector_clock.py
 python simulate.py
 ```
 
-`simulate.py` arranca los nodos A, B y C (puertos 5001, 5002 y 5003), ejecuta un escenario de eventos y comunicaciones, imprime la tabla de relojes y guarda evidencia en `logs/`.
+`simulate.py` arranca **tres archivos independientes**: `nodo_a.py`, `nodo_b.py` y `nodo_c.py` (puertos 5001, 5002 y 5003), ejecuta un escenario de eventos y comunicaciones, imprime la tabla de relojes y guarda evidencia en `logs/`.
 
-Para levantar un nodo a mano:
+Para levantar cada nodo a mano (una terminal por archivo):
 
 ```bash
-python nodo.py --id A --port 5001 --peers A=http://127.0.0.1:5001,B=http://127.0.0.1:5002,C=http://127.0.0.1:5003
+python nodo_a.py
+python nodo_b.py
+python nodo_c.py
 ```
 
 ## API REST (JSON)
@@ -63,7 +65,9 @@ La simulación deja esa clasificación en `logs/causalidad.txt` y la tabla antes
 
 ## Archivos
 
+- `nodo_a.py`: nodo A independiente (puerto 5001).
+- `nodo_b.py`: nodo B independiente (puerto 5002).
+- `nodo_c.py`: nodo C independiente (puerto 5003).
 - `vector_clock.py`: reglas del reloj y comparación de eventos.
-- `nodo.py`: proceso independiente + API REST.
-- `simulate.py`: escenario de prueba con tres nodos.
+- `simulate.py`: escenario de prueba que arranca los tres archivos.
 - `test_vector_clock.py`: pruebas de incremento, `max()` y concurrencia.

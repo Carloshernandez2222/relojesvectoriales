@@ -1,21 +1,21 @@
 nodo,tipo,detalle,reloj_antes,reloj_despues,message_id
 A,EVENTO_LOCAL,A inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 1, ""B"": 0, ""C"": 0}",
 B,EVENTO_LOCAL,B inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 1, ""C"": 0}",
-A,ENVIO,A envía a B: resultado parcial de A,"{""A"": 1, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",e845aad4-2c89-482a-87bd-e7c25843c950
-B,RECEPCION,B recibe de A: resultado parcial de A,"{""A"": 0, ""B"": 1, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",e845aad4-2c89-482a-87bd-e7c25843c950
-B,ACK_ENVIADO,B confirma recepción e845aad4-2c89-482a-87bd-e7c25843c950 a A,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",e845aad4-2c89-482a-87bd-e7c25843c950
-A,ACK_RECIBIDO,Recepción confirmada por B (respuesta_http),"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",e845aad4-2c89-482a-87bd-e7c25843c950
+A,ENVIO,A envía a B: resultado parcial de A,"{""A"": 1, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
+B,RECEPCION,B recibe de A: resultado parcial de A,"{""A"": 0, ""B"": 1, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
+B,ACK_ENVIADO,B confirma recepción b1987cca-1bb9-42e3-8c1d-504a160edfbd a A,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
+A,ACK_RECIBIDO,Recepción confirmada por B (respuesta_http),"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
 C,EVENTO_LOCAL,C trabaja en paralelo,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 0, ""C"": 1}",
-B,ENVIO,B envía a C: B reenvía lo de A más lo propio,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",8c901b10-3290-4b31-ace3-2cf6fb5b3fc7
-C,RECEPCION,C recibe de B: B reenvía lo de A más lo propio,"{""A"": 0, ""B"": 0, ""C"": 1}","{""A"": 2, ""B"": 3, ""C"": 2}",8c901b10-3290-4b31-ace3-2cf6fb5b3fc7
-C,ACK_ENVIADO,C confirma recepción 8c901b10-3290-4b31-ace3-2cf6fb5b3fc7 a B,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 2}",8c901b10-3290-4b31-ace3-2cf6fb5b3fc7
-B,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",8c901b10-3290-4b31-ace3-2cf6fb5b3fc7
-C,ENVIO,C envía a A: C responde a A,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 3}",2173e657-692c-434f-b93d-b13f9cd02300
-A,RECEPCION,A recibe de C: C responde a A,"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 3, ""B"": 3, ""C"": 3}",2173e657-692c-434f-b93d-b13f9cd02300
-A,ACK_ENVIADO,A confirma recepción 2173e657-692c-434f-b93d-b13f9cd02300 a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 3, ""B"": 3, ""C"": 3}",2173e657-692c-434f-b93d-b13f9cd02300
-C,ACK_RECIBIDO,Recepción confirmada por A (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 2, ""B"": 3, ""C"": 3}",2173e657-692c-434f-b93d-b13f9cd02300
+B,ENVIO,B envía a C: B reenvía lo de A más lo propio,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",e0484e85-c3da-427e-9ace-9caad33942aa
+C,RECEPCION,C recibe de B: B reenvía lo de A más lo propio,"{""A"": 0, ""B"": 0, ""C"": 1}","{""A"": 2, ""B"": 3, ""C"": 2}",e0484e85-c3da-427e-9ace-9caad33942aa
+C,ACK_ENVIADO,C confirma recepción e0484e85-c3da-427e-9ace-9caad33942aa a B,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 2}",e0484e85-c3da-427e-9ace-9caad33942aa
+B,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",e0484e85-c3da-427e-9ace-9caad33942aa
+C,ENVIO,C envía a A: C responde a A,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
+A,RECEPCION,A recibe de C: C responde a A,"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 3, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
+A,ACK_ENVIADO,A confirma recepción 5db67ac1-f83e-4e21-bf11-eb8191e8c302 a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 3, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
+C,ACK_RECIBIDO,Recepción confirmada por A (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 2, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
 B,EVENTO_LOCAL,B hace otro trabajo local,"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 4, ""C"": 0}",
-A,ENVIO,A envía a C: A avisa a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",6f22fcc1-9e53-4924-956d-a85a8cd7b578
-C,RECEPCION,C recibe de A: A avisa a C,"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 4}",6f22fcc1-9e53-4924-956d-a85a8cd7b578
-C,ACK_ENVIADO,C confirma recepción 6f22fcc1-9e53-4924-956d-a85a8cd7b578 a A,"{""A"": 4, ""B"": 3, ""C"": 4}","{""A"": 4, ""B"": 3, ""C"": 4}",6f22fcc1-9e53-4924-956d-a85a8cd7b578
-A,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 4, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",6f22fcc1-9e53-4924-956d-a85a8cd7b578
+A,ENVIO,A envía a C: A avisa a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
+C,RECEPCION,C recibe de A: A avisa a C,"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 4}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
+C,ACK_ENVIADO,C confirma recepción 2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68 a A,"{""A"": 4, ""B"": 3, ""C"": 4}","{""A"": 4, ""B"": 3, ""C"": 4}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
+A,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 4, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68

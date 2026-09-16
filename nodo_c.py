@@ -1,15 +1,11 @@
-"""Nodo independiente con reloj vectorial y API REST.
+"""Nodo C independiente.
 
-Cada proceso de este módulo es un nodo del sistema distribuido. Expone
-endpoints HTTP/JSON para consultar estado, generar eventos locales,
-enviar mensajes, recibir mensajes y confirmar recepciones (ACK).
-
-El conteo de recepciones solo se considera confirmado cuando llega el ACK.
+Proceso propio, reloj vectorial propio y API REST en el puerto 5003.
+Se comunica con A y B solo por HTTP/JSON. No comparte memoria con los otros nodos.
 """
 
 from __future__ import annotations
 
-import argparse
 import logging
 import threading
 import uuid
@@ -20,20 +16,23 @@ from flask import Flask, jsonify, request
 
 from vector_clock import VectorClock
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
-logger = logging.getLogger("nodo")
+NODO_ID = "C"
+PUERTO = 5003
+PARES = {
+    "A": "http://127.0.0.1:5001",
+    "B": "http://127.0.0.1:5002",
+    "C": "http://127.0.0.1:5003",
+}
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger("nodo_c")
 
 
-class DistributedNode:
-    """Estado y reglas de un nodo del sistema distribuido."""
-
-    def __init__(self, node_id: str, peers: dict[str, str]) -> None:
-        self.node_id = node_id
-        self.peers = peers
-        self.clock = VectorClock(list(peers.keys()), node_id)
+class NodoC:
+    def __init__(self) -> None:
+        self.node_id = NODO_ID
+        self.peers = PARES
+        self.clock = VectorClock(list(PARES.keys()), NODO_ID)
         self.lock = threading.Lock()
         self.history: list[dict] = []
         self.pending_acks: dict[str, dict] = {}
@@ -65,6 +64,7 @@ class DistributedNode:
         with self.lock:
             return {
                 "nodo": self.node_id,
+                "archivo": "nodo_c.py",
                 "reloj": self.clock.copy(),
                 "pares": self.peers,
                 "estadisticas": dict(self.stats),
@@ -82,7 +82,6 @@ class DistributedNode:
     def send_message(self, destino: str, payload: str) -> dict:
         if destino not in self.peers or destino == self.node_id:
             raise ValueError(f"Destino inválido: {destino}")
-
         message_id = str(uuid.uuid4())
         with self.lock:
             antes = self.clock.copy()
@@ -110,7 +109,6 @@ class DistributedNode:
                 despues,
                 extra={"message_id": message_id, "destino": destino},
             )
-
         url = self.peers[destino].rstrip("/") + "/receive"
         try:
             respuesta = requests.post(url, json=mensaje, timeout=5)
@@ -125,7 +123,6 @@ class DistributedNode:
                     "pendiente": True,
                     "estadisticas": dict(self.stats),
                 }
-
         ack = cuerpo.get("ack", {})
         confirmado = bool(cuerpo.get("ok")) and bool(ack.get("recibido"))
         if confirmado:
@@ -144,7 +141,6 @@ class DistributedNode:
         reloj_remoto = body.get("reloj") or {}
         message_id = body.get("message_id") or str(uuid.uuid4())
         ack_url = body.get("ack_url")
-
         with self.lock:
             antes = self.clock.copy()
             despues = self.clock.on_receive(reloj_remoto)
@@ -172,10 +168,8 @@ class DistributedNode:
                 despues,
                 extra={"message_id": message_id, "origen": origen},
             )
-
         if ack_url:
             threading.Thread(target=self._deliver_ack, args=(ack_url, ack), daemon=True).start()
-
         return {"ok": True, "ack": ack}
 
     def _deliver_ack(self, ack_url: str, ack: dict) -> None:
@@ -210,78 +204,51 @@ class DistributedNode:
         return {"ok": True, "evento": entrada, "estadisticas": dict(self.stats)}
 
 
-def create_app(node: DistributedNode) -> Flask:
-    app = Flask(__name__)
-
-    @app.get("/")
-    @app.get("/state")
-    def state():
-        return jsonify(node.snapshot())
-
-    @app.post("/event")
-    def event():
-        data = request.get_json(silent=True) or {}
-        descripcion = data.get("descripcion", "evento local")
-        return jsonify({"ok": True, "evento": node.local_event(descripcion)})
-
-    @app.post("/send")
-    def send():
-        data = request.get_json(silent=True) or {}
-        destino = data.get("destino")
-        payload = data.get("payload", "")
-        if not destino:
-            return jsonify({"ok": False, "error": "Falta 'destino'"}), 400
-        try:
-            resultado = node.send_message(destino, payload)
-        except ValueError as exc:
-            return jsonify({"ok": False, "error": str(exc)}), 400
-        codigo = 200 if resultado.get("ok") else 502
-        return jsonify(resultado), codigo
-
-    @app.post("/receive")
-    def receive():
-        data = request.get_json(silent=True)
-        if not data:
-            return jsonify({"ok": False, "error": "JSON requerido"}), 400
-        return jsonify(node.receive_message(data))
-
-    @app.post("/ack")
-    def ack():
-        data = request.get_json(silent=True)
-        if not data:
-            return jsonify({"ok": False, "error": "JSON requerido"}), 400
-        return jsonify(node.receive_ack(data))
-
-    return app
+nodo = NodoC()
+app = Flask(__name__)
 
 
-def parse_peers(raw: str) -> dict[str, str]:
-    pares = {}
-    for item in raw.split(","):
-        nombre, url = item.split("=", 1)
-        pares[nombre.strip()] = url.strip()
-    return pares
+@app.get("/")
+@app.get("/state")
+def state():
+    return jsonify(nodo.snapshot())
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Nodo con reloj vectorial")
-    parser.add_argument("--id", required=True, help="Identificador del nodo, por ejemplo A")
-    parser.add_argument("--port", required=True, type=int, help="Puerto HTTP del nodo")
-    parser.add_argument(
-        "--peers",
-        required=True,
-        help="Pares id=url separados por coma. Ejemplo: A=http://127.0.0.1:5001,B=http://127.0.0.1:5002",
-    )
-    args = parser.parse_args()
-    peers = parse_peers(args.peers)
-    if args.id not in peers:
-        raise SystemExit("El --id debe aparecer también en --peers")
+@app.post("/event")
+def event():
+    data = request.get_json(silent=True) or {}
+    return jsonify({"ok": True, "evento": nodo.local_event(data.get("descripcion", "evento local en C"))})
 
-    node = DistributedNode(args.id, peers)
-    app = create_app(node)
-    logger.info("Nodo %s escuchando en puerto %s", args.id, args.port)
-    app.run(host="127.0.0.1", port=args.port, debug=False, use_reloader=False)
+
+@app.post("/send")
+def send():
+    data = request.get_json(silent=True) or {}
+    destino = data.get("destino")
+    if not destino:
+        return jsonify({"ok": False, "error": "Falta 'destino'"}), 400
+    try:
+        resultado = nodo.send_message(destino, data.get("payload", ""))
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify(resultado), (200 if resultado.get("ok") else 502)
+
+
+@app.post("/receive")
+def receive():
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"ok": False, "error": "JSON requerido"}), 400
+    return jsonify(nodo.receive_message(data))
+
+
+@app.post("/ack")
+def ack():
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"ok": False, "error": "JSON requerido"}), 400
+    return jsonify(nodo.receive_ack(data))
 
 
 if __name__ == "__main__":
-    main()
+    logger.info("Nodo C (nodo_c.py) escuchando en puerto %s", PUERTO)
+    app.run(host="127.0.0.1", port=PUERTO, debug=False, use_reloader=False)
