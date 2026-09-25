@@ -37,6 +37,22 @@ class VectorClock:
             self._clock[node_id] = max(self._clock[node_id], incoming)
         return self.copy()
 
+    def set_values(self, values: Mapping[str, int]) -> dict[str, int]:
+        """Edita a mano una o varias posiciones del vector.
+
+        Solo acepta nodos conocidos y enteros >= 0. Las posiciones que no se
+        indiquen conservan su valor actual.
+        """
+        nuevos = {}
+        for node_id, value in values.items():
+            if node_id not in self._clock:
+                raise ValueError(f"Nodo desconocido en el vector: {node_id}")
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                raise ValueError(f"El valor de {node_id} debe ser un entero >= 0, no {value!r}")
+            nuevos[node_id] = value
+        self._clock.update(nuevos)
+        return self.copy()
+
     def on_receive(self, other: Mapping[str, int]) -> dict[str, int]:
         """Actualiza el reloj al recibir un mensaje: max() y luego incrementa."""
         self.merge(other)

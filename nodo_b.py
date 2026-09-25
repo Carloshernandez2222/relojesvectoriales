@@ -36,6 +36,7 @@ class NodoB:
         self.lock = threading.Lock()
         self.history: list[dict] = []
         self.pending_acks: dict[str, dict] = {}
+        self.received: dict[str, dict] = {}
         self.stats = {
             "eventos_locales": 0,
             "mensajes_enviados": 0,
@@ -43,6 +44,9 @@ class NodoB:
             "acks_enviados": 0,
             "acks_recibidos": 0,
             "recepciones_confirmadas": 0,
+            "acks_ignorados": 0,
+            "mensajes_duplicados": 0,
+            "ediciones_manuales": 0,
         }
 
     def _record(self, tipo: str, detalle: str, antes: dict, despues: dict, extra: dict | None = None) -> dict:
@@ -78,6 +82,13 @@ class NodoB:
             despues = self.clock.increment()
             self.stats["eventos_locales"] += 1
             return self._record("EVENTO_LOCAL", descripcion, antes, despues)
+
+    def edit_clock(self, valores: dict, motivo: str = "edición manual") -> dict:
+        with self.lock:
+            antes = self.clock.copy()
+            despues = self.clock.set_values(valores)
+            self.stats["ediciones_manuales"] += 1
+            return self._record("EDICION_MANUAL", motivo, antes, despues)
 
     def send_message(self, destino: str, payload: str) -> dict:
         if destino not in self.peers or destino == self.node_id:
@@ -127,13 +138,14 @@ class NodoB:
         confirmado = bool(cuerpo.get("ok")) and bool(ack.get("recibido"))
         if confirmado:
             self._apply_ack(ack, via="respuesta_http")
-        return {
-            "ok": confirmado,
-            "message_id": message_id,
-            "reloj_local": self.clock.copy(),
-            "ack": ack,
-            "estadisticas": dict(self.stats),
-        }
+        with self.lock:
+            return {
+                "ok": confirmado,
+                "message_id": message_id,
+                "reloj_local": self.clock.copy(),
+                "ack": ack,
+                "estadisticas": dict(self.stats),
+            }
 
     def receive_message(self, body: dict) -> dict:
         origen = body.get("origen")
@@ -141,7 +153,12 @@ class NodoB:
         reloj_remoto = body.get("reloj") or {}
         message_id = body.get("message_id") or str(uuid.uuid4())
         ack_url = body.get("ack_url")
+        if not isinstance(reloj_remoto, dict):
+            raise ValueError("'reloj' debe ser un objeto JSON")
         with self.lock:
+            if message_id in self.received:
+                self.stats["mensajes_duplicados"] += 1
+                return {"ok": True, "duplicado": True, "ack": self.received[message_id]}
             antes = self.clock.copy()
             despues = self.clock.on_receive(reloj_remoto)
             self.stats["mensajes_recibidos"] += 1
@@ -150,7 +167,7 @@ class NodoB:
                 f"{self.node_id} recibe de {origen}: {payload}",
                 antes,
                 despues,
-                extra={"message_id": message_id, "origen": origen},
+                extra={"message_id": message_id, "origen": origen, "reloj_mensaje": reloj_remoto},
             )
             ack = {
                 "recibido": True,
@@ -160,6 +177,7 @@ class NodoB:
                 "reloj_receptor": despues,
                 "mensajes_recibidos": self.stats["mensajes_recibidos"],
             }
+            self.received[message_id] = ack
             self.stats["acks_enviados"] += 1
             self._record(
                 "ACK_ENVIADO",
@@ -182,14 +200,17 @@ class NodoB:
         message_id = ack.get("message_id")
         with self.lock:
             pendiente = self.pending_acks.get(message_id)
-            if pendiente and pendiente.get("confirmado"):
+            if pendiente is None or ack.get("origen_ack") != pendiente["destino"]:
+                self.stats["acks_ignorados"] += 1
+                logger.warning("ACK ignorado (mensaje desconocido o emisor incorrecto): %s", ack)
+                return {"ignorado": True, "message_id": message_id}
+            if pendiente.get("confirmado"):
                 return pendiente
             self.stats["acks_recibidos"] += 1
             self.stats["recepciones_confirmadas"] += 1
-            if pendiente:
-                pendiente["confirmado"] = True
-                pendiente["via"] = via
-                pendiente["reloj_receptor"] = ack.get("reloj_receptor")
+            pendiente["confirmado"] = True
+            pendiente["via"] = via
+            pendiente["reloj_receptor"] = ack.get("reloj_receptor")
             antes = self.clock.copy()
             return self._record(
                 "ACK_RECIBIDO",
@@ -212,6 +233,25 @@ app = Flask(__name__)
 @app.get("/state")
 def state():
     return jsonify(nodo.snapshot())
+
+
+@app.get("/clock")
+def get_clock():
+    with nodo.lock:
+        return jsonify({"nodo": nodo.node_id, "reloj": nodo.clock.copy()})
+
+
+@app.route("/clock", methods=["PUT", "PATCH"])
+def edit_clock():
+    data = request.get_json(silent=True) or {}
+    valores = data.get("reloj")
+    if not isinstance(valores, dict) or not valores:
+        return jsonify({"ok": False, "error": "Cuerpo esperado: {\"reloj\": {\"A\": 3, ...}}"}), 400
+    try:
+        entrada = nodo.edit_clock(valores, data.get("motivo", "edición manual"))
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify({"ok": True, "evento": entrada, "reloj": entrada["reloj_despues"]})
 
 
 @app.post("/event")
@@ -238,7 +278,10 @@ def receive():
     data = request.get_json(silent=True)
     if not data:
         return jsonify({"ok": False, "error": "JSON requerido"}), 400
-    return jsonify(nodo.receive_message(data))
+    try:
+        return jsonify(nodo.receive_message(data))
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
 
 
 @app.post("/ack")

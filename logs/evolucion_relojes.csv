@@ -1,21 +1,21 @@
-nodo,tipo,detalle,reloj_antes,reloj_despues,message_id
-A,EVENTO_LOCAL,A inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 1, ""B"": 0, ""C"": 0}",
-B,EVENTO_LOCAL,B inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 1, ""C"": 0}",
-A,ENVIO,A envía a B: resultado parcial de A,"{""A"": 1, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
-B,RECEPCION,B recibe de A: resultado parcial de A,"{""A"": 0, ""B"": 1, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
-B,ACK_ENVIADO,B confirma recepción b1987cca-1bb9-42e3-8c1d-504a160edfbd a A,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
-A,ACK_RECIBIDO,Recepción confirmada por B (respuesta_http),"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",b1987cca-1bb9-42e3-8c1d-504a160edfbd
-C,EVENTO_LOCAL,C trabaja en paralelo,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 0, ""C"": 1}",
-B,ENVIO,B envía a C: B reenvía lo de A más lo propio,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",e0484e85-c3da-427e-9ace-9caad33942aa
-C,RECEPCION,C recibe de B: B reenvía lo de A más lo propio,"{""A"": 0, ""B"": 0, ""C"": 1}","{""A"": 2, ""B"": 3, ""C"": 2}",e0484e85-c3da-427e-9ace-9caad33942aa
-C,ACK_ENVIADO,C confirma recepción e0484e85-c3da-427e-9ace-9caad33942aa a B,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 2}",e0484e85-c3da-427e-9ace-9caad33942aa
-B,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",e0484e85-c3da-427e-9ace-9caad33942aa
-C,ENVIO,C envía a A: C responde a A,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
-A,RECEPCION,A recibe de C: C responde a A,"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 3, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
-A,ACK_ENVIADO,A confirma recepción 5db67ac1-f83e-4e21-bf11-eb8191e8c302 a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 3, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
-C,ACK_RECIBIDO,Recepción confirmada por A (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 2, ""B"": 3, ""C"": 3}",5db67ac1-f83e-4e21-bf11-eb8191e8c302
-B,EVENTO_LOCAL,B hace otro trabajo local,"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 4, ""C"": 0}",
-A,ENVIO,A envía a C: A avisa a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
-C,RECEPCION,C recibe de A: A avisa a C,"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 4}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
-C,ACK_ENVIADO,C confirma recepción 2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68 a A,"{""A"": 4, ""B"": 3, ""C"": 4}","{""A"": 4, ""B"": 3, ""C"": 4}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
-A,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 4, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",2e1aaa7d-c879-4aa0-bbeb-4d69cd425a68
+nodo,tipo,detalle,reloj_antes,reloj_despues,explicacion,message_id
+A,EVENTO_LOCAL,A inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 1, ""B"": 0, ""C"": 0}",Evento local: A incrementa su posición (0 → 1),
+B,EVENTO_LOCAL,B inicia cálculo local,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 1, ""C"": 0}",Evento local: B incrementa su posición (0 → 1),
+A,ENVIO,A envía a B: resultado parcial de A,"{""A"": 1, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}","Envío (cuenta como evento): A incrementa su posición (1 → 2) y manda [A:2, B:0, C:0] en el JSON a B",360955d7-2b45-40aa-b12e-3e92b7799c96
+B,RECEPCION,B recibe de A: resultado parcial de A,"{""A"": 0, ""B"": 1, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}","max([A:0, B:1, C:0], [A:2, B:0, C:0]) = [A:2, B:1, C:0]; luego B +1 → [A:2, B:2, C:0]",360955d7-2b45-40aa-b12e-3e92b7799c96
+B,ACK_ENVIADO,B confirma recepción 360955d7-2b45-40aa-b12e-3e92b7799c96 a A,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 2, ""C"": 0}",Confirmación de recepción: el reloj no cambia,360955d7-2b45-40aa-b12e-3e92b7799c96
+A,ACK_RECIBIDO,Recepción confirmada por B (respuesta_http),"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 2, ""B"": 0, ""C"": 0}",Confirmación de recepción: el reloj no cambia,360955d7-2b45-40aa-b12e-3e92b7799c96
+C,EVENTO_LOCAL,C trabaja en paralelo,"{""A"": 0, ""B"": 0, ""C"": 0}","{""A"": 0, ""B"": 0, ""C"": 1}",Evento local: C incrementa su posición (0 → 1),
+B,ENVIO,B envía a C: B reenvía lo de A más lo propio,"{""A"": 2, ""B"": 2, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}","Envío (cuenta como evento): B incrementa su posición (2 → 3) y manda [A:2, B:3, C:0] en el JSON a C",b6985a76-a83c-4667-9f67-07251b29b48e
+C,RECEPCION,C recibe de B: B reenvía lo de A más lo propio,"{""A"": 0, ""B"": 0, ""C"": 1}","{""A"": 2, ""B"": 3, ""C"": 2}","max([A:0, B:0, C:1], [A:2, B:3, C:0]) = [A:2, B:3, C:1]; luego C +1 → [A:2, B:3, C:2]",b6985a76-a83c-4667-9f67-07251b29b48e
+C,ACK_ENVIADO,C confirma recepción b6985a76-a83c-4667-9f67-07251b29b48e a B,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 2}",Confirmación de recepción: el reloj no cambia,b6985a76-a83c-4667-9f67-07251b29b48e
+B,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 3, ""C"": 0}",Confirmación de recepción: el reloj no cambia,b6985a76-a83c-4667-9f67-07251b29b48e
+C,ENVIO,C envía a A: C responde a A,"{""A"": 2, ""B"": 3, ""C"": 2}","{""A"": 2, ""B"": 3, ""C"": 3}","Envío (cuenta como evento): C incrementa su posición (2 → 3) y manda [A:2, B:3, C:3] en el JSON a A",7d47d41f-ff48-4506-99f4-e418da2dd07b
+A,RECEPCION,A recibe de C: C responde a A,"{""A"": 2, ""B"": 0, ""C"": 0}","{""A"": 3, ""B"": 3, ""C"": 3}","max([A:2, B:0, C:0], [A:2, B:3, C:3]) = [A:2, B:3, C:3]; luego A +1 → [A:3, B:3, C:3]",7d47d41f-ff48-4506-99f4-e418da2dd07b
+A,ACK_ENVIADO,A confirma recepción 7d47d41f-ff48-4506-99f4-e418da2dd07b a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 3, ""B"": 3, ""C"": 3}",Confirmación de recepción: el reloj no cambia,7d47d41f-ff48-4506-99f4-e418da2dd07b
+C,ACK_RECIBIDO,Recepción confirmada por A (respuesta_http),"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 2, ""B"": 3, ""C"": 3}",Confirmación de recepción: el reloj no cambia,7d47d41f-ff48-4506-99f4-e418da2dd07b
+B,EVENTO_LOCAL,B hace otro trabajo local,"{""A"": 2, ""B"": 3, ""C"": 0}","{""A"": 2, ""B"": 4, ""C"": 0}",Evento local: B incrementa su posición (3 → 4),
+A,ENVIO,A envía a C: A avisa a C,"{""A"": 3, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}","Envío (cuenta como evento): A incrementa su posición (3 → 4) y manda [A:4, B:3, C:3] en el JSON a C",7f1e0237-6ae2-4d2d-a7b7-9fe8cb9aed6a
+C,RECEPCION,C recibe de A: A avisa a C,"{""A"": 2, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 4}","max([A:2, B:3, C:3], [A:4, B:3, C:3]) = [A:4, B:3, C:3]; luego C +1 → [A:4, B:3, C:4]",7f1e0237-6ae2-4d2d-a7b7-9fe8cb9aed6a
+C,ACK_ENVIADO,C confirma recepción 7f1e0237-6ae2-4d2d-a7b7-9fe8cb9aed6a a A,"{""A"": 4, ""B"": 3, ""C"": 4}","{""A"": 4, ""B"": 3, ""C"": 4}",Confirmación de recepción: el reloj no cambia,7f1e0237-6ae2-4d2d-a7b7-9fe8cb9aed6a
+A,ACK_RECIBIDO,Recepción confirmada por C (respuesta_http),"{""A"": 4, ""B"": 3, ""C"": 3}","{""A"": 4, ""B"": 3, ""C"": 3}",Confirmación de recepción: el reloj no cambia,7f1e0237-6ae2-4d2d-a7b7-9fe8cb9aed6a
